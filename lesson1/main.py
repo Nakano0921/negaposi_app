@@ -3,17 +3,17 @@ from time import sleep
 import chromedriver_binary
 import csv
 import pandas as pd
+import config
 def main():
   driver = webdriver.Chrome()
   error_flg = False
   # 一休レストランのTOPページ
-  url = 'https://restaurant.ikyu.com/'
-  driver.get(url)
+  driver.get(config.top_url)
   sleep(1)
   # 「検索する」のボタンをクリック
   if error_flg is False:
     try:
-      notnow_button = driver.find_element_by_xpath('//*[@id="__layout"]/div/main/div[2]/section[1]/div[2]/button')
+      notnow_button = driver.find_element_by_xpath(config.search_xpath)
       sleep(1)
       notnow_button.click()
       sleep(1)
@@ -22,13 +22,13 @@ def main():
   # 「リッツカールトン京都」で検索
   if error_flg is False:
     try:
-      notnow_button = driver.find_element_by_xpath('//*[@id="__layout"]/div/div[2]/div/aside/div[2]/form/div/div/div/input')
+      notnow_button = driver.find_element_by_xpath(config.area_name_xpath)
       sleep(1)
       notnow_button.click()
       sleep(1)
       notnow_button.send_keys('リッツカールトン京都')
       sleep(1)
-      search_button = driver.find_element_by_xpath('//*[@id="__layout"]/div/div[2]/div/aside/div[2]/form/div/div/button')
+      search_button = driver.find_element_by_xpath(config.search_botton_xpath)
       sleep(1)
       search_button.click()
       sleep(1)
@@ -46,7 +46,7 @@ def main():
   # 「クチコミ」をクリック
   if error_flg is False:
     try:
-      notnow_button = driver.find_element_by_xpath('//*[@id="main-article"]/nav/ul/li[3]')
+      notnow_button = driver.find_element_by_xpath(config.review_xpath)
       sleep(1)
       notnow_button.click()
       sleep(1)
@@ -55,7 +55,7 @@ def main():
   # 「もっと見る」をクリック
   if error_flg is False:
     try:
-      notnow_button = driver.find_element_by_xpath('//*[@id="guideContent"]/section/div[2]/div[1]/div[1]/div[2]/div/div[3]/a')
+      notnow_button = driver.find_element_by_xpath(config.more_xpath)
       sleep(1)
       notnow_button.click()
       sleep(1)
@@ -64,7 +64,7 @@ def main():
   # 「先頭へ」をクリック
   if error_flg is False:
     try:
-      notnow_button = driver.find_element_by_xpath('//*[@id="des_inner"]/div[24]/a[1]')
+      notnow_button = driver.find_element_by_xpath(congig.toppage_xpath)
       sleep(1)
       notnow_button.click()
       sleep(1)
@@ -96,12 +96,12 @@ def main():
   df[service] = services
   df.to_csv('assesment.csv', index=False)
   # 一休レストランのTOPページ
-  driver.get(url)
+  driver.get(config.top_url)
   sleep(1)
   # 「検索する」のボタンをクリック
   if error_flg is False:
     try:
-      notnow_button = driver.find_element_by_xpath('//*[@id="__layout"]/div/main/div[2]/section[1]/div[2]/button')
+      notnow_button = driver.find_element_by_xpath(config.search_xpath)
       sleep(1)
       notnow_button.click()
       sleep(1)
@@ -110,13 +110,13 @@ def main():
   # 「フォーシーズンズホテル京都」で検索
   if error_flg is False:
     try:
-      notnow_button = driver.find_element_by_xpath('//*[@id="__layout"]/div/div[2]/div/aside/div[2]/form/div/div/div/input')
+      notnow_button = driver.find_element_by_xpath(config.area_name_xpath)
       sleep(1)
       notnow_button.click()
       sleep(1)
       notnow_button.send_keys('フォーシーズンズホテル京都')
       sleep(1)
-      search_button = driver.find_element_by_xpath('//*[@id="__layout"]/div/div[2]/div/aside/div[2]/form/div/div/button')
+      search_button = driver.find_element_by_xpath(config.search_botton_xpath)
       sleep(1)
       search_button.click()
       sleep(1)
@@ -134,7 +134,7 @@ def main():
   # 「クチコミ」をクリック
   if error_flg is False:
     try:
-      notnow_button = driver.find_element_by_xpath('//*[@id="main-article"]/nav/ul/li[3]')
+      notnow_button = driver.find_element_by_xpath(config.review_xpath)
       sleep(1)
       notnow_button.click()
       sleep(1)
@@ -143,7 +143,7 @@ def main():
   # 「もっと見る」をクリック
   if error_flg is False:
     try:
-      notnow_button = driver.find_element_by_xpath('//*[@id="guideContent"]/section/div[2]/div[1]/div[1]/div[2]/div/div[3]/a')
+      notnow_button = driver.find_element_by_xpath(config.more_xpath)
       sleep(1)
       notnow_button.click()
       sleep(1)
@@ -152,7 +152,7 @@ def main():
   # 「先頭へ」をクリック
   if error_flg is False:
     try:
-      notnow_button = driver.find_element_by_xpath('//*[@id="des_inner"]/div[24]/a[1]')
+      notnow_button = driver.find_element_by_xpath(config.toppage_xpath)
       sleep(1)
       notnow_button.click()
       sleep(1)
