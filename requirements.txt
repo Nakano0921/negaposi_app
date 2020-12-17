@@ -1,0 +1,13 @@
+chromedriver-binary==87.0.4280.88.0
+emoji==0.6.0
+mecab-python3==1.0.3
+neologdn==0.4
+numpy==1.19.4
+oseti==0.2
+pandas==1.1.5
+python-dateutil==2.8.1
+pytz==2020.4
+selenium==3.141.0
+sengiri==0.2.1
+six==1.15.0
+urllib3==1.26.2
