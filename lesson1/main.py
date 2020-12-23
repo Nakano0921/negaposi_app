@@ -22,14 +22,17 @@ def open_target(driver):
   sleep(1)
   button.click()
   sleep(1)
-  # （一番）のレストランを取得
-  button = driver.find_element_by_xpath('//*[@id="__layout"]/div/div[2]/div[1]/main/section[1]/a/div[1]/span/img')
-  sleep(1)
-  butto.click()
-  sleep(1)
-  # クチコミを表示
-  a = driver.find_element_by_id('layout').text
-  if a != '規定評価数に達していません':
+  # レストランを取得
+  a = driver.find_element_by_class_name('ratingCount_6le43').text
+  if a != '規定評価数に達していません' :
+    button = driver.find_element_by_xpath('//*[@id="__layout"]/div/div[2]/div[1]/main/section[1]/a/div[1]/span/img')
+    sleep(1)
+    button.click()
+    sleep(5)
+    tab_array = driver.window_handles
+    driver.switch_to.window(tab_array[1])
+    sleep(1)
+    # クチコミを表示
     button = driver.find_element_by_xpath(config.review_xpath)
     sleep(1)
     button.click()
@@ -38,11 +41,11 @@ def open_target(driver):
     sleep(1)
     button.click()
     sleep(1)
-    button = driver.find_element_by_xpath(congig.toppage_xpath)
+    button = driver.find_element_by_xpath(config.toppage_xpath)
     sleep(1)
     button.click()
     sleep(1)
-def get_item():
+def get_item(driver):
   """
   コメント、味、サービスのスクレイピング
   """
@@ -62,21 +65,16 @@ def get_item():
     services.append(service)
     i +=2
   print(comments,tastes,services)
-  def writeCSV():
-    """
-    csvに保存
-    """
-    df = pd.DataFrame()
-    df[comment] = comments
-    df[taste] = tastes
-    df[service] = services
-    df.to_csv('assesment.csv', index=False)
-
+def writeCSV():
+  """
+  csvに保存
+  """
+  df = pd.DataFrame([comments[0],tastes[0],services[0]],columns=['comment', 'taste', 'service'])
 if __name__ == "__main__":
-  main()
+  driver = main()
   open_target(driver)
-  get_item()
   comments = []
   tastes = []
   services = []
+  get_item(driver)
   writeCSV()
