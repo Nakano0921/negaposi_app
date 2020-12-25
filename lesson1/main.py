@@ -77,32 +77,22 @@ def get_item(driver):
             f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[3]/td[2]/span'
         ).text
         services.append(service)
-        write_csv()
         i += 2
-    print(comments, tastes, services)
+    # 確認のためのコード"print(comments, tastes, services)"
 
 
 def write_csv():
     """
     csvに保存
     """
-    n = 0
-    if n == 0:
-        df = pd.DataFrame(
-            {"comment": [comments[n]], "taste": [tastes[n]], "service": [services[n]]},
-            index=False,
-        )
-    else:
-        append_s = pd.Series([comments[n], tastes[n], services[n],index = ['comment', 'taste', 'service'], name = False])
+    n = 1
+    df = pd.DataFrame({"comment": [comments[0]]})
+    for com in comments[1:]:
+        append_s = pd.Series([com], index=df.columns, name=n)
         df.append(append_s)
-        """
-        # 行追加で最初に試したコード（動かなかったが一応残す）
-        df.append(
-            {"comment": [comments[n]], "taste": [tastes[n]], "service": [services[n]]},
-            ignore_index=True,
-        """
+        n += 1
     df.to_csv("assesment.csv")
-    n += 1
+    print(df)
 
 
 if __name__ == "__main__":
@@ -112,3 +102,4 @@ if __name__ == "__main__":
     tastes = []
     services = []
     get_item(driver)
+    write_csv()
