@@ -3,6 +3,8 @@ from time import sleep
 import chromedriver_binary
 import csv
 import pandas as pd
+import oseti
+import numpy as np
 import config
 
 
@@ -143,7 +145,6 @@ def write_csv():
     """
     csvに保存
     """
-    l = len(comments)
     df = pd.DataFrame(
         {
             "comment": [comments[0]],
@@ -160,9 +161,46 @@ def write_csv():
             {"comment": com, "taste": tas, "service": ser, "mood": moo, "cospa": cos},
             ignore_index=True,
         )
-        l += 1
     df.to_csv("assesment.csv")
-    print(df)
+    # 確認用のコードprint(df)
+    result_df = df
+    return result_df
+
+
+def pick_csv(result_df):
+    # 確認用のコードprint(result_df.columns)
+    result_comments = []
+    result_comment = result_df["comment"]
+    for result_com in result_comment[0:]:
+        result_comments.append(result_com)
+    # 確認用のコードprint(result_comments)
+    return result_comments
+
+
+def negaposi(result_comments):
+    result_negaposies = []
+    for result_comment in result_comments:
+        result_negaposi = analyzer.analyze(result_comment)
+        result_average = np.average(result_negaposi)
+        result_negaposies.append(result_average)
+    # 確認用のコードprint(result_negaposies)
+    return result_negaposies
+
+
+def add_csv(result_negaposies, result_df):
+    result_df["negaposi"] = [
+        result_negaposies[0],
+        result_negaposies[1],
+        result_negaposies[2],
+        result_negaposies[3],
+        result_negaposies[4],
+        result_negaposies[5],
+        result_negaposies[6],
+        result_negaposies[7],
+        result_negaposies[8],
+        result_negaposies[9],
+    ]
+    print(result_df)
 
 
 if __name__ == "__main__":
@@ -175,4 +213,8 @@ if __name__ == "__main__":
     moods = []
     cospas = []
     get_item(driver)
-    write_csv()
+    result_df = write_csv()
+    result_comments = pick_csv(result_df)
+    analyzer = oseti.Analyzer()
+    result_negaposies = negaposi(result_comments)
+    add_csv(result_negaposies, result_df)
