@@ -11,7 +11,57 @@ def main():
     return driver
 
 
-def open_target(driver):
+def open_restaurant(driver):
+    """
+    toppageを開いて
+    「検索」を押して、店名を検索
+    クチコミを表示
+    """
+    # 一休レストランのTOPページ
+    driver.get(config.top_url)
+    sleep(1)
+    # 「検索」を押す
+    button = driver.find_element_by_xpath(config.search_xpath)
+    sleep(1)
+    button.click()
+    sleep(1)
+    # 店名を検索
+    button = driver.find_element_by_xpath(config.specific_xpath)
+    sleep(1)
+    button.click()
+    sleep(1)
+    restaurant_name = input("レストランの名前を入力してください。")
+    button.send_keys(restaurant_name)
+    sleep(1)
+    button = driver.find_element_by_xpath(config.search_botton_xpath)
+    sleep(1)
+    button.click()
+    # レストランを取得してクチコミを表示
+    total_assesment = driver.find_element_by_class_name("ratingLabel_hndnZ").text
+    if total_assesment == "規定評価数に達していません":
+        print("このレストランは規定評価数に達していない為、分析できません。")
+    else:
+        button = driver.find_element_by_xpath(config.search_result)
+        button.click()
+    sleep(5)
+    tab_array = driver.window_handles
+    driver.switch_to.window(tab_array[1])
+    sleep(1)
+    button = driver.find_element_by_xpath(config.review_xpath)
+    sleep(1)
+    button.click()
+    sleep(1)
+    button = driver.find_element_by_xpath(config.more_xpath)
+    sleep(1)
+    button.click()
+    sleep(1)
+    button = driver.find_element_by_xpath(config.toppage_xpath)
+    sleep(1)
+    button.click()
+    sleep(1)
+
+
+def open_area(driver):
     """
     toppageを開いて
     「銀座」を開いて
@@ -27,8 +77,8 @@ def open_target(driver):
     button.click()
     sleep(1)
     # レストランを取得
-    a = driver.find_element_by_class_name("ratingCount_6le43").text
-    if a != "規定評価数に達していません":
+    total_assesment = driver.find_element_by_class_name("ratingCount_6le43").text
+    if total_assesment != "規定評価数に達していません":
         button = driver.find_element_by_xpath(
             '//*[@id="__layout"]/div/div[2]/div[1]/main/section[1]/a/div[1]/span/img'
         )
@@ -77,29 +127,52 @@ def get_item(driver):
             f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[3]/td[2]/span'
         ).text
         services.append(service)
+        mood = assesment.find_element_by_xpath(
+            f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[4]/td[2]/span'
+        ).text
+        moods.append(mood)
+        cospa = assesment.find_element_by_xpath(
+            f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[5]/td[2]/span'
+        ).text
+        cospas.append(cospa)
         i += 2
-    # 確認のためのコード"print(comments, tastes, services)"
+    # 確認用のコードprint(comments, tastes, services, moods, cospas)
 
 
 def write_csv():
     """
     csvに保存
     """
-    n = 1
-    df = pd.DataFrame({"comment": [comments[0]]})
-    for com in comments[1:]:
-        append_s = pd.Series([com], index=df.columns, name=n)
-        df.append(append_s)
-        n += 1
+    l = len(comments)
+    df = pd.DataFrame(
+        {
+            "comment": [comments[0]],
+            "taste": [tastes[0]],
+            "service": [services[0]],
+            "mood": [moods[0]],
+            "cospa": [cospas[0]],
+        }
+    )
+    for (com, tas, ser, moo, cos) in zip(
+        comments[1:], tastes[1:], services[1:], moods[1:], cospas[1:]
+    ):
+        df = df.append(
+            {"comment": com, "taste": tas, "service": ser, "mood": moo, "cospa": cos},
+            ignore_index=True,
+        )
+        l += 1
     df.to_csv("assesment.csv")
     print(df)
 
 
 if __name__ == "__main__":
     driver = main()
-    open_target(driver)
+    # open_restaurant(driver)
+    open_area(driver)
     comments = []
     tastes = []
     services = []
+    moods = []
+    cospas = []
     get_item(driver)
     write_csv()
