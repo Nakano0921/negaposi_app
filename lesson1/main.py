@@ -265,18 +265,7 @@ def add_csv(result_negaposies, result_df):
     """
     ネガポジの結果をデータフレームに追加
     """
-    result_df["negaposi"] = [
-        result_negaposies[0],
-        result_negaposies[1],
-        result_negaposies[2],
-        result_negaposies[3],
-        result_negaposies[4],
-        result_negaposies[5],
-        result_negaposies[6],
-        result_negaposies[7],
-        result_negaposies[8],
-        result_negaposies[9],
-    ]
+    result_df["negaposi"] = result_negaposies
     result_df.to_csv("assesment.csv")
     print(result_df)
 
