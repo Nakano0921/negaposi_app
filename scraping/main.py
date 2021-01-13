@@ -1,11 +1,10 @@
 from selenium import webdriver
 from time import sleep
 import chromedriver_binary
-import csv
 import pandas as pd
 import oseti
 import numpy as np
-import config
+import const
 
 
 def main():
@@ -20,22 +19,22 @@ def open_restaurant(driver):
     クチコミを表示
     """
     # 一休レストランのTOPページ
-    driver.get(config.top_url)
+    driver.get(const.top_url)
     sleep(1)
     # 「検索」を押す
-    button = driver.find_element_by_xpath(config.search_xpath)
+    button = driver.find_element_by_xpath(const.search_xpath)
     sleep(1)
     button.click()
     sleep(1)
     # 店名を検索
-    button = driver.find_element_by_xpath(config.specific_xpath)
+    button = driver.find_element_by_xpath(const.specific_xpath)
     sleep(1)
     button.click()
     sleep(1)
     restaurant_name = input("レストランの名前を入力してください。")
     button.send_keys(restaurant_name)
     sleep(1)
-    button = driver.find_element_by_xpath(config.search_botton_xpath)
+    button = driver.find_element_by_xpath(const.search_botton_xpath)
     sleep(1)
     button.click()
     # レストランを取得してクチコミを表示
@@ -43,21 +42,21 @@ def open_restaurant(driver):
     if total_assesment == "規定評価数に達していません":
         print("このレストランは規定評価数に達していない為、分析できません。")
     else:
-        button = driver.find_element_by_xpath(config.search_result)
+        button = driver.find_element_by_xpath(const.search_result)
         button.click()
     sleep(5)
     tab_array = driver.window_handles
     driver.switch_to.window(tab_array[1])
     sleep(1)
-    button = driver.find_element_by_xpath(config.review_xpath)
+    button = driver.find_element_by_xpath(const.review_xpath)
     sleep(1)
     button.click()
     sleep(1)
-    button = driver.find_element_by_xpath(config.more_xpath)
+    button = driver.find_element_by_xpath(const.more_xpath)
     sleep(1)
     button.click()
     sleep(1)
-    button = driver.find_element_by_xpath(config.toppage_xpath)
+    button = driver.find_element_by_xpath(const.toppage_xpath)
     sleep(1)
     button.click()
     sleep(1)
@@ -71,10 +70,10 @@ def open_area(driver):
     クチコミを表示
     """
     # 一休レストランのTOPページ
-    driver.get(config.top_url)
+    driver.get(const.top_url)
     sleep(1)
     # 「銀座」を押す
-    button = driver.find_element_by_xpath(config.ginza_xpath)
+    button = driver.find_element_by_xpath(const.ginza_xpath)
     sleep(1)
     button.click()
     sleep(1)
@@ -91,15 +90,15 @@ def open_area(driver):
         driver.switch_to.window(tab_array[1])
         sleep(1)
         # クチコミを表示
-        button = driver.find_element_by_xpath(config.review_xpath)
+        button = driver.find_element_by_xpath(const.review_xpath)
         sleep(1)
         button.click()
         sleep(1)
-        button = driver.find_element_by_xpath(config.more_xpath)
+        button = driver.find_element_by_xpath(const.more_xpath)
         sleep(1)
         button.click()
         sleep(1)
-        button = driver.find_element_by_xpath(config.toppage_xpath)
+        button = driver.find_element_by_xpath(const.toppage_xpath)
         sleep(1)
         button.click()
         sleep(1)
@@ -141,72 +140,6 @@ def get_item(driver):
         ).text
         cospas.append(cospa)
         i += 2
-    # elif lis >= 2:
-    # lis = list(range(1,lis))
-    # n = 1
-    # for l　in lis:
-    #    for assesment in assesments:
-    #        if i == 24:
-    #            break
-    #        comment = assesment.find_element_by_xpath(
-    #            f'//*[@id="des_inner"]/div[{i}]/div[3]/table/tbody/tr[3]/td'
-    #        ).text
-    #        comments.append(comment)
-    #        taste = assesment.find_element_by_xpath(
-    #            f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[2]/td[2]/span'
-    #        ).text
-    #        tastes.append(taste)
-    #        service = assesment.find_element_by_xpath(
-    #            f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[3]/td[2]/span'
-    #        ).text
-    #        services.append(service)
-    #        mood = assesment.find_element_by_xpath(
-    #            f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[4]/td[2]/span'
-    #        ).text
-    #        moods.append(mood)
-    #        cospa = assesment.find_element_by_xpath(
-    #            f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[5]/td[2]/span'
-    #        ).text
-    #        cospas.append(cospa)
-    #        i += 2
-    #   if n != 2 and n <= 6:
-    #       button = driver.find_element_by_xpath(f'//*[@id="des_inner"]/div[24]/a[{n}]')
-    #       sleep(1)
-    #       button.click()
-    #       assesment_url = driver.current_url
-    #       driver.implicitly_wait(3)
-    #       driver.get(assesment_url)
-    #       assesments = driver.find_elements_by_class_name("des_gdIDUsrImprBox")
-    #       n += 1
-    #   elif n == 2:
-    #       n += 1
-    #       button = driver.find_element_by_xpath(f'//*[@id="des_inner"]/div[24]/a[{n}]')
-    #       sleep(1)
-    #       button.click()
-    #       assesment_url = driver.current_url
-    #       driver.implicitly_wait(3)
-    #       driver.get(assesment_url)
-    #       assesments = driver.find_elements_by_class_name("des_gdIDUsrImprBox")
-    #       n += 1
-    #   elif (n == 7 and l <= 10) or n >= 8:
-    #       button = driver.find_element_by_xpath(f'//*[@id="des_inner"]/div[24]/a[{n}]')
-    #       sleep(1)
-    #       button.click()
-    #       assesment_url = driver.current_url
-    #       driver.implicitly_wait(3)
-    #       driver.get(assesment_url)
-    #       assesments = driver.find_elements_by_class_name("des_gdIDUsrImprBox")
-    #   elif n == 7 and l >=11:
-    #       n = 8
-    #       button = driver.find_element_by_xpath(f'//*[@id="des_inner"]/div[24]/a[{n}]')
-    #       sleep(1)
-    #       button.click()
-    #       assesment_url = driver.current_url
-    #       driver.implicitly_wait(3)
-    #       driver.get(assesment_url)
-    #       assesments = driver.find_elements_by_class_name("des_gdIDUsrImprBox")
-    #       n += 1
-    # 確認用のコードprint(comments, tastes, services, moods, cospas)
 
 
 def write_csv():
@@ -252,6 +185,7 @@ def negaposi(result_comments):
     """
     ネガポジ判定して、リスト化
     """
+    analyzer = oseti.Analyzer()
     result_negaposies = []
     for result_comment in result_comments:
         result_negaposi = analyzer.analyze(result_comment)
@@ -282,6 +216,5 @@ if __name__ == "__main__":
     get_item(driver)
     result_df = write_csv()
     result_comments = pick_csv(result_df)
-    analyzer = oseti.Analyzer()
     result_negaposies = negaposi(result_comments)
     add_csv(result_negaposies, result_df)
