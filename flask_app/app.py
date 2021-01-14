@@ -4,8 +4,11 @@ import pandas as pd
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/", methods=["POST"])
 def toppage():
+    print(request.form)
+    # main.pyを動かすコードを書く
+    # displayに行くコードを書く
     return render_template("top.html")
 
 
@@ -20,4 +23,4 @@ def desplay_csv():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
