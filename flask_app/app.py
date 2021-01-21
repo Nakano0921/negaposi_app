@@ -4,21 +4,17 @@ import pandas as pd
 app = Flask(__name__)
 
 
-@app.route("/", methods=["POST"])
+@app.route("/")
 def toppage():
-    # print(request.form)
-    # main.pyを動かすコードを書く
-    # displayに行くコードを書く
     return render_template("top.html")
 
 
 @app.route("/display", methods=["POST"])
-def desplay_csv():
-    # lacal_name = request.form.get("local_name")
+def display_csv():
     df = pd.read_csv("/Users/nakanoken/lessons/scraping/assesment.csv")
     header = df.columns
     record = df.values.tolist()
-    print(df)
+    # print(df)
     return render_template("display.html", header=header, record=record)
 
 
