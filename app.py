@@ -11,7 +11,7 @@ def toppage():
 
 @app.route("/display", methods=["POST"])
 def display_csv():
-    df = pd.read_csv("/Users/nakanoken/lessons/scraping/assesment.csv")
+    df = pd.read_csv("assesment.csv")
     header = df.columns
     record = df.values.tolist()
     # print(df)
