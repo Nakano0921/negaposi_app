@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import pandas as pd
+import subprocess
 
 app = Flask(__name__)
 
@@ -11,7 +12,10 @@ def toppage():
 
 @app.route("/display", methods=["POST"])
 def display_csv():
-    df = pd.read_csv("assesment.csv")
+    scraping_file = ["python", "scraping/main.py", "スクレイピング中"]
+    proc = subprocess.Popen(scraping_file)
+    proc.communicate()
+    df = pd.read_csv("scraping/assesment.csv")
     header = df.columns
     record = df.values.tolist()
     # print(df)
