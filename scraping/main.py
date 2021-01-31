@@ -8,10 +8,11 @@ import const
 
 
 def main():
-    driver_path = "/app/.chromedriver/bin/chromedriver"
+    # driver_path = "/app/.chromedriver/bin/chromedriver"
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
-    driver = webdriver.Chrome(options=options, executable_path=driver_path)
+    driver = webdriver.Chrome(options=options)
+    # driver = webdriver.Chrome(options=options, executable_path=driver_path)
     return driver
 
 
@@ -47,9 +48,10 @@ def open_restaurant(driver):
     else:
         button = driver.find_element_by_xpath(const.search_result)
         button.click()
-    sleep(5)
-    tab_array = driver.window_handles
-    driver.switch_to.window(tab_array[1])
+    # herokuでは必要ないかも？
+    # sleep(5)
+    # tab_array = driver.window_handles
+    # driver.switch_to.window(tab_array[1])
     sleep(1)
     button = driver.find_element_by_xpath(const.review_xpath)
     sleep(1)
