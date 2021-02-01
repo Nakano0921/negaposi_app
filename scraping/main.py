@@ -8,11 +8,11 @@ import const
 
 
 def main():
-    driver_path = "/app/.chromedriver/bin/chromedriver"
+    # driver_path = "/app/.chromedriver/bin/chromedriver"
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
-    # driver = webdriver.Chrome(options=options)
-    driver = webdriver.Chrome(options=options, executable_path=driver_path)
+    driver = webdriver.Chrome(options=options)
+    # driver = webdriver.Chrome(options=options, executable_path=driver_path)
     return driver
 
 
@@ -118,34 +118,64 @@ def get_item(driver):
     driver.implicitly_wait(3)
     driver.get(assesment_url)
     assesments = driver.find_elements_by_class_name("des_gdIDUsrImprBox")
-    # scraping_cnt = ユーザーが選んだ件数をtextで取得
-    # lis = int(scraping_cnt) / 10
     i = 4
-    # if lis == 1:
-    for assesment in assesments:
-        if i == 24:
-            break
-        comment = assesment.find_element_by_xpath(
-            f'//*[@id="des_inner"]/div[{i}]/div[3]/table/tbody/tr[3]/td'
-        ).text
-        comments.append(comment)
-        taste = assesment.find_element_by_xpath(
-            f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[2]/td[2]/span'
-        ).text
-        tastes.append(taste)
-        service = assesment.find_element_by_xpath(
-            f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[3]/td[2]/span'
-        ).text
-        services.append(service)
-        mood = assesment.find_element_by_xpath(
-            f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[4]/td[2]/span'
-        ).text
-        moods.append(mood)
-        cospa = assesment.find_element_by_xpath(
-            f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[5]/td[2]/span'
-        ).text
-        cospas.append(cospa)
-        i += 2
+    c = 0
+    n = 3
+    while c < 9:
+        for assesment in assesments:
+            if i == 24:
+                break
+            comment = assesment.find_element_by_xpath(
+                f'//*[@id="des_inner"]/div[{i}]/div[3]/table/tbody/tr[3]/td'
+            ).text
+            comments.append(comment)
+            taste = assesment.find_element_by_xpath(
+                f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[2]/td[2]/span'
+            ).text
+            tastes.append(taste)
+            service = assesment.find_element_by_xpath(
+                f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[3]/td[2]/span'
+            ).text
+            services.append(service)
+            mood = assesment.find_element_by_xpath(
+                f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[4]/td[2]/span'
+            ).text
+            moods.append(mood)
+            cospa = assesment.find_element_by_xpath(
+                f'//*[@id="des_inner"]/div[{i}]/div[1]/table/tbody/tr[5]/td[2]/span'
+            ).text
+            cospas.append(cospa)
+            i += 2
+        if c == 0:
+            next_page_bottun = driver.find_element_by_xpath(
+                '//*[@id="des_inner"]/div[24]/a[1]'
+            )
+            sleep(1)
+            next_page_bottun.click()
+            sleep(1)
+            assesments = driver.find_elements_by_class_name("des_gdIDUsrImprBox")
+            c += 1
+            i = 4
+        elif c >= 1 and c <= 5:
+            next_page_bottun = driver.find_element_by_xpath(
+                f'//*[@id="des_inner"]/div[24]/a[{n}]'
+            )
+            sleep(1)
+            next_page_bottun.click()
+            sleep(1)
+            assesments = driver.find_elements_by_class_name("des_gdIDUsrImprBox")
+            c += 1
+            n += 1
+            i = 4
+        elif c >= 6:
+            n = 7
+            next_page_bottun = driver.find_element_by_xpath(
+                f'//*[@id="des_inner"]/div[24]/a[{n}]'
+            )
+            sleep(1)
+            next_page_bottun.click()
+            sleep(1)
+            c += 1
 
 
 def write_csv():
