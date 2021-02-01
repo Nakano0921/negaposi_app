@@ -1,22 +1,25 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<table class="highlight">
-  <thead>
-    <tr>
-      {% for i in header: %}
-      <th scope="col">{{ i }}</th>
+<title>分析結果</title>
+<div>
+  <table class="highlight">
+    <thead>
+      <tr>
+        {% for i in header: %}
+        <th scope="col">{{ i }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in record: %}
+      <tr>
+        {% for j in i: %}
+        <td>{{ j }}</td>
+        {% endfor %}
+      </tr>
       {% endfor %}
-    </tr>
-  </thead>
-  <tbody>
-    {% for i in record: %}
-    <tr>
-      {% for j in i: %}
-      <td>{{ j }}</td>
-      {% endfor %}
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 {% endblock %}

@@ -36,7 +36,6 @@ def open_restaurant(driver):
     sleep(1)
     button.click()
     sleep(1)
-    restaurant_name = input("レストランの名前を入力してください。")
     button.send_keys(restaurant_name)
     sleep(1)
     button = driver.find_element_by_xpath(const.search_botton_xpath)
@@ -91,9 +90,10 @@ def open_area(driver):
         )
         sleep(1)
         button.click()
-        sleep(5)
-        tab_array = driver.window_handles
-        driver.switch_to.window(tab_array[1])
+        # Herokuでは必要ないかも？
+        # sleep(5)
+        # tab_array = driver.window_handles
+        # driver.switch_to.window(tab_array[1])
         sleep(1)
         # クチコミを表示
         button = driver.find_element_by_xpath(const.review_xpath)
