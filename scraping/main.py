@@ -90,11 +90,9 @@ def open_area(driver):
         )
         sleep(1)
         button.click()
-        sleep(1)
-        # Herokuでは必要ないかも？
-        # sleep(5)
-        # tab_array = driver.window_handles
-        # driver.switch_to.window(tab_array[1])
+        sleep(5)
+        tab_array = driver.window_handles
+        driver.switch_to.window(tab_array[1])
         # クチコミを表示
         driver.implicitly_wait(5)
         button = driver.find_element_by_xpath(const.review_xpath)
