@@ -23,6 +23,7 @@ def open_restaurant(driver):
     クチコミを表示
     """
     # 一休レストランのTOPページ
+    driver.implicitly_wait(5)
     driver.get(const.top_url)
     sleep(1)
     # 「検索」を押す
