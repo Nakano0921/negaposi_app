@@ -76,6 +76,7 @@ def open_area(driver):
     クチコミを表示
     """
     # 一休レストランのTOPページ
+    driver.implicitly_wait(5)
     driver.get(const.top_url)
     sleep(1)
     # 「銀座」を押す
