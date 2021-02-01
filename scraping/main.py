@@ -8,11 +8,11 @@ import const
 
 
 def main():
-    # driver_path = "/app/.chromedriver/bin/chromedriver"
+    driver_path = "/app/.chromedriver/bin/chromedriver"
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
-    driver = webdriver.Chrome(options=options)
-    # driver = webdriver.Chrome(options=options, executable_path=driver_path)
+    # driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(options=options, executable_path=driver_path)
     return driver
 
 
