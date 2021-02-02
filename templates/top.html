@@ -1,8 +1,35 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h3>分析アプリ</h3>
-<form action="/display" method="POST">
-  <input type="submit" value="データを取得する">
-</form>
+<div id="index-banner" class="parallax-container">
+  <div class="section no-pad-bot">
+    <div class="container">
+      <br><br>
+      <h1 class="header center teal-text text-lighten-2">Scraping App</h1>
+      <br><br>
+    </div>
+  </div>
+  <div class="parallax">
+    <img src="/static/images/ikyu-restaurant-plus_tags01.jpg" alt="Unsplashed background img 1"
+      style="transform: translate3d(-50%, 201.989px, 0px); opacity: 1;">
+  </div>
+</div>
+<div class="container">
+  <div class="section">
+    <div class="row">
+      <div class="col s12 center">
+        <h3><i class="mdi-content-send brown-text"></i></h3>
+        <h4>一休レストランを活用したお店の分析</h4>
+        <p class="left-align light">
+          このアプリでは一休レストランでお客様があなたのお店にした評価を見る事ができます。評価項目は「美味しさ」、「サービス」、「雰囲気」、「コスパ」の4つからなり最大で５点です。又、コメントで具体的なお客様目線のお店の評価を得る事ができます。このアプリでは「nagapozi」という項目を足しております。「nagaposi」はお客様のコメントが満足していただいた内容なのか、改善点をご指摘いただいた内容なのかが点数で分かります。最大で１点となり満足度が高いと点数が高くなっております。是非、更なるご発展の為にご活用ください。
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row center">
+  <form action="/display" method="POST">
+    <input type="submit" value="データを取得する" class="btn-large waves-effect waves-light teal lighten-1">
+  </form>
+</div>
 {% endblock %}

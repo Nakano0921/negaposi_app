@@ -98,7 +98,7 @@ def open_area(driver):
         button = driver.find_element_by_xpath(const.review_xpath)
         driver.implicitly_wait(2)
         button.click()
-        driver.implicitly_wait(2)
+        driver.implicitly_wait(3)
         button = driver.find_element_by_xpath(const.more_xpath)
         driver.implicitly_wait(2)
         button.click()
