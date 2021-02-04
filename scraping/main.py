@@ -4,6 +4,7 @@ import pandas as pd
 import oseti
 import numpy as np
 import const
+import app
 
 
 def main():
@@ -13,6 +14,7 @@ def main():
     options.add_argument("--disable-dev-shm-usage")
     # driver = webdriver.Chrome(options=options)
     driver = webdriver.Chrome(options=options, executable_path=driver_path)
+    # driver = webdriver.Chrome()
     return driver
 
 
@@ -22,6 +24,7 @@ def open_restaurant(driver):
     「検索」を押して、店名を検索
     クチコミを表示
     """
+    res_name = app.get_res_name()
     # 一休レストランのTOPページ
     driver.implicitly_wait(5)
     driver.get(const.top_url)
@@ -36,17 +39,19 @@ def open_restaurant(driver):
     driver.implicitly_wait(2)
     button.click()
     driver.implicitly_wait(2)
-    # button.send_keys(restaurant_name)
-    # driver.implicitly_wait(2)
+    button.send_keys(res_name)
+    driver.implicitly_wait(2)
     button = driver.find_element_by_xpath(const.search_botton_xpath)
     driver.implicitly_wait(2)
     button.click()
     # レストランを取得してクチコミを表示
+    driver.implicitly_wait(1)
     total_assesment = driver.find_element_by_class_name("ratingLabel_hndnZ").text
     if total_assesment == "規定評価数に達していません":
         print("このレストランは規定評価数に達していない為、分析できません。")
     else:
         button = driver.find_element_by_xpath(const.search_result)
+        driver.implicitly_wait(1)
         button.click()
     driver.implicitly_wait(5)
     tab_array = driver.window_handles
@@ -236,13 +241,13 @@ def add_csv(result_negaposies, result_df):
     """
     result_df["negaposi"] = result_negaposies
     result_df.to_csv("assesment.csv")
-    print(result_df)
+    # print(result_df)
 
 
 if __name__ == "__main__":
     driver = main()
-    # open_restaurant(driver)
     open_area(driver)
+    # open_restaurant(driver)
     comments = []
     tastes = []
     services = []
