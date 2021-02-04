@@ -17,7 +17,7 @@
   - selenium入門でseleniumの学習
   - 仮想環境（virtualenv）の反映
   - スクレイピングの結果をCSVに出力
-  - requirements.txtでライブラリの管理(#1)
+  - requirements.txtでライブラリの管理#
   - PRを初めて行う#2
   - 設定用ファイルを作成し、メインファイルから読み込み#3
   - git管理したくないファイルをgitignoreに入れる#6#7
