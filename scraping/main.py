@@ -4,7 +4,8 @@ import pandas as pd
 import oseti
 import numpy as np
 import const
-import app
+
+# import app
 
 
 def main():
@@ -107,7 +108,7 @@ def open_area(driver):
         button = driver.find_element_by_xpath(const.more_xpath)
         driver.implicitly_wait(2)
         button.click()
-        driver.implicitly_wait(2)
+        driver.implicitly_wait(3)
         button = driver.find_element_by_xpath(const.toppage_xpath)
         driver.implicitly_wait(2)
         button.click()
