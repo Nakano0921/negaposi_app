@@ -1,8 +1,18 @@
 from flask import Flask, render_template, request
 import pandas as pd
 import subprocess
+from rq import Queue
+from worker import conn
 
 app = Flask(__name__)
+
+q = Queue(connection=conn)
+
+
+def scraping_asses():
+    scraping_file = ["python", "scraping/main.py", "スクレイピング中"]
+    proc = subprocess.Popen(scraping_file)
+    proc.communicate()
 
 
 @app.route("/")
@@ -31,9 +41,7 @@ def res_name_csv():
 
 @app.route("/display", methods=["POST"])
 def display_csv():
-    scraping_file = ["python", "scraping/main.py", "スクレイピング中"]
-    proc = subprocess.Popen(scraping_file)
-    proc.communicate()
+    result = q.enqueue(scraping_asses)
     df = pd.read_csv("scraping/assesment.csv")
     header = df.columns
     record = df.values.tolist()
