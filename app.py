@@ -41,7 +41,7 @@ def res_name_csv():
 
 @app.route("/display", methods=["POST"])
 def display_csv():
-    result = q.enqueue(scraping_asses)
+    # result = q.enqueue(scraping_asses)
     df = pd.read_csv("scraping/assesment.csv")
     header = df.columns
     record = df.values.tolist()
