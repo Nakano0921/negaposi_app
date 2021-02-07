@@ -25,51 +25,51 @@ def open_restaurant(driver):
     「検索」を押して、店名を検索
     クチコミを表示
     """
-    res_name = app.get_res_name()
+    # res_name = app.get_res_name()
     # 一休レストランのTOPページ
     driver.implicitly_wait(5)
     driver.get(const.top_url)
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(5)
     # 「検索」を押す
     button = driver.find_element_by_xpath(const.search_xpath)
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(5)
     button.click()
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(5)
     # 店名を検索
     button = driver.find_element_by_xpath(const.specific_xpath)
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(5)
     button.click()
-    driver.implicitly_wait(2)
-    button.send_keys(res_name)
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(5)
+    button.send_keys()
+    driver.implicitly_wait(5)
     button = driver.find_element_by_xpath(const.search_botton_xpath)
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(5)
     button.click()
     # レストランを取得してクチコミを表示
-    driver.implicitly_wait(1)
+    driver.implicitly_wait(5)
     total_assesment = driver.find_element_by_class_name("ratingLabel_hndnZ").text
     if total_assesment == "規定評価数に達していません":
         print("このレストランは規定評価数に達していない為、分析できません。")
     else:
         button = driver.find_element_by_xpath(const.search_result)
-        driver.implicitly_wait(1)
+        driver.implicitly_wait(5)
         button.click()
     driver.implicitly_wait(5)
     tab_array = driver.window_handles
     driver.switch_to.window(tab_array[1])
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(5)
     button = driver.find_element_by_xpath(const.review_xpath)
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(5)
     button.click()
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(5)
     button = driver.find_element_by_xpath(const.more_xpath)
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(5)
     button.click()
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(5)
     button = driver.find_element_by_xpath(const.toppage_xpath)
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(5)
     button.click()
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(5)
 
 
 def open_area(driver):
@@ -80,39 +80,39 @@ def open_area(driver):
     クチコミを表示
     """
     # 一休レストランのTOPページ
-    driver.implicitly_wait(3)
+    driver.implicitly_wait(5)
     driver.get(const.top_url)
-    driver.implicitly_wait(3)
+    driver.implicitly_wait(5)
     # 「銀座」を押す
     button = driver.find_element_by_xpath(const.ginza_xpath)
-    driver.implicitly_wait(3)
+    driver.implicitly_wait(5)
     button.click()
-    driver.implicitly_wait(3)
+    driver.implicitly_wait(5)
     # レストランを取得
     total_assesment = driver.find_element_by_class_name("ratingCount_6le43").text
     if total_assesment != "規定評価数に達していません":
         button = driver.find_element_by_xpath(
             '//*[@id="__layout"]/div/div[2]/div[1]/main/section[1]/a/div[1]/span/img'
         )
-        driver.implicitly_wait(1)
+        driver.implicitly_wait(5)
         button.click()
         driver.implicitly_wait(5)
         tab_array = driver.window_handles
         driver.switch_to.window(tab_array[1])
         # クチコミを表示
-        driver.implicitly_wait(3)
+        driver.implicitly_wait(5)
         button = driver.find_element_by_xpath(const.review_xpath)
-        driver.implicitly_wait(2)
+        driver.implicitly_wait(5)
         button.click()
-        driver.implicitly_wait(3)
+        driver.implicitly_wait(5)
         button = driver.find_element_by_xpath(const.more_xpath)
-        driver.implicitly_wait(2)
+        driver.implicitly_wait(5)
         button.click()
-        driver.implicitly_wait(3)
+        driver.implicitly_wait(5)
         button = driver.find_element_by_xpath(const.toppage_xpath)
-        driver.implicitly_wait(2)
+        driver.implicitly_wait(5)
         button.click()
-        driver.implicitly_wait(2)
+        driver.implicitly_wait(5)
 
 
 def get_item(driver):
@@ -120,7 +120,7 @@ def get_item(driver):
     コメント、味、サービスのスクレイピング
     """
     assesment_url = driver.current_url
-    driver.implicitly_wait(3)
+    driver.implicitly_wait(5)
     driver.get(assesment_url)
     assesments = driver.find_elements_by_class_name("des_gdIDUsrImprBox")
     i = 4
@@ -155,9 +155,9 @@ def get_item(driver):
             next_page_bottun = driver.find_element_by_xpath(
                 '//*[@id="des_inner"]/div[24]/a[1]'
             )
-            driver.implicitly_wait(2)
+            driver.implicitly_wait(5)
             next_page_bottun.click()
-            driver.implicitly_wait(2)
+            driver.implicitly_wait(5)
             assesments = driver.find_elements_by_class_name("des_gdIDUsrImprBox")
             c += 1
             i = 4
@@ -165,9 +165,9 @@ def get_item(driver):
             next_page_bottun = driver.find_element_by_xpath(
                 f'//*[@id="des_inner"]/div[24]/a[{n}]'
             )
-            driver.implicitly_wait(2)
+            driver.implicitly_wait(5)
             next_page_bottun.click()
-            driver.implicitly_wait(2)
+            driver.implicitly_wait(5)
             assesments = driver.find_elements_by_class_name("des_gdIDUsrImprBox")
             c += 1
             n += 1
@@ -177,9 +177,9 @@ def get_item(driver):
             next_page_bottun = driver.find_element_by_xpath(
                 f'//*[@id="des_inner"]/div[24]/a[{n}]'
             )
-            driver.implicitly_wait(2)
+            driver.implicitly_wait(5)
             next_page_bottun.click()
-            driver.implicitly_wait(2)
+            driver.implicitly_wait(5)
             c += 1
 
 
