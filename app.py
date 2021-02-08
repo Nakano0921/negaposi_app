@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import pandas as pd
 import subprocess
-from redis import Redis
+import redis
 from rq import Queue
 from worker import conn
 
