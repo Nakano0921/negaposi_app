@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request
 import pandas as pd
 import subprocess
-
-# from redis import redis
+from redis import redis
 from rq import Queue
 from worker import conn
 
@@ -29,20 +28,17 @@ def sample():
 
 
 @app.route("/s-display", methods=["POST"])
-# def background_process():
-# q.enqueue(start_scraping, "http://heroku.com")
+def background_process():
+    q.enqueue(start_scraping, "http://heroku.com")
 
 
-# def start_scraping():
-# scraping_file = ["python", "scraping/main.py", "スクレイピング中"]
-# proc = subprocess.Popen(scraping_file)
-# proc.communicate()
-
-
-def res_name_csv():
+def start_scraping():
     scraping_file = ["python", "scraping/main.py", "スクレイピング中"]
     proc = subprocess.Popen(scraping_file)
     proc.communicate()
+
+
+def res_name_csv():
     df = pd.read_csv("scraping/assesment.csv")
     header = df.columns
     record = df.values.tolist()
